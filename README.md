@@ -1,16 +1,18 @@
 # ios_test_issue_demo
 
-A new Flutter project.
+A Flutter project to replicate an issue with `xcodebuild build-for-testing` failing because of
+pods not found.
 
-## Getting Started
+## How to replicate
 
-This project is a starting point for a Flutter application.
+Run the following commands:
 
-A few resources to get you started if this is your first Flutter project:
+# `flutter build ios integration_test/home_page_test.dart --release --flavor master`
+# `cd ios`
+# `xcodebuild -workspace Runner.xcworkspace -scheme master -config Flutter/Debug.xcconfig -derivedDataPath ../build/ios_integ -sdk iphoneos build-for-testing`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Tests work fine when run with flutter command: `flutter test integration_test/home_page_test.dart --flavor master`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+With xcodebuild command; `xcodebuild -workspace Runner.xcworkspace -scheme master -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max' test` (from ios directory)
+
+And from Xcode (select `master` scheme and then Product > Test)
